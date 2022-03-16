@@ -10,66 +10,90 @@
 
     <!--Angularjs lib ref-->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-</head>    
+    <!--custom js-->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/services/contactlist-data-service.js"></script>
+    <script src="scripts/directives/input-validation.js"></script>
+</head>  
 
-<body ng-app="addrBook" ng-controller="contactListCtrl">
-    <div class="container">
-        <div class="panel panel-info">
-            <div class="panel-heading">           
-                <div class="panel-title">
-                <h3 class="text-center">Phone Book</h3>
-                                
-                </div>      
-            </div>
-            <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="form-group has-info has-feedback">
-                    <label for="seacrh" class="col-sm-2 control-label">Search: </label>
-                    <div class="col-sm-5">
-                        <input type="text"  name="search" ng-model ="searchList" class="form-control">
-                        <span class="glyphicon glyphicon-search form-control-feedback"></span>                                            
-                    </div>
+<body>
+    <div ng-app="addrBook" ng-controller="contactListCtrl">
+        <div class="container">
+            <div class="panel panel-info">
+                <div class="panel-heading">           
+                    <div class="panel-title">
+                    <h3 class="text-center">Phone Book</h3>
+                                    
+                    </div>      
                 </div>
-            </form> 
-              <div class="table-responsive">
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Phone</th>
-                    </tr>
-                   </thead>
-                   <tbody>
-                    <tr ng-repeat="x in info | filter:searchList">
-                        <td><span ng-hide="showMe($index)">{{x.firstName}}</span><input text="text"class="form-control input-sm" ng-model="x.firstName" ng-show="showMe($index)"></td>
-                        <td><span ng-hide="showMe($index)">{{x.lastName}}</span><input text="text" class="form-control input-sm" ng-model="x.lastName" ng-show="showMe($index)"></td>
-                        <td><span ng-hide="showMe($index)">{{x.phone}}</span><input text="text" class="form-control input-sm" ng-model="x.phone" ng-show="showMe($index)"></td>
-                        <td><a href="#" ng-click="removeItem()"><span class="glyphicon glyphicon-trash"></span>&nbsp;</a>/<a href="#" ng-click="change()" ng-hide="showMe($index)"> <span class="glyphicon glyphicon-edit"></span></a></a><a href="#" ng-click="save()" ng-show="showMe($index)">&nbsp;<span class="glyphicon glyphicon-ok"></span></a></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="panel-footer">
-                <form class="form-inline">
-                    <div class="form-group">
-                        <span>First Name：</span>
-                        <input type="text" class="form-control" ng-model="newFirstName" >
+                <div class="panel-body">
+                <form class="form-horizontal" name="contactSearchForm">
+                    <div class="form-group has-info has-feedback">
+                        <label for="seacrh" class="col-sm-2 control-label">Search: </label>
+                        <div class="col-sm-5">
+                            <input type="text"  name="search" ng-model ="searchList" class="form-control">
+                            <span class="glyphicon glyphicon-search form-control-feedback"></span>                                            
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <span>Last Name：</span>
-                        <input type="text" class="form-control" ng-model="newLastName" >
-                    </div> 
-                    <div class="form-group">
-                        <span>Phone：</span>
-                        <input type="text" class="form-control" ng-model="newPhone" >
-                    </div>
-                    <input type="button" class="btn btn-primary btn-sm" value="Add"ng-click="addItem()">       
-                </form>            
-            </div>
-        </div>   
+                </form> 
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Phone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="x in info | filter:searchList">
+                            <td><span ng-hide="showMe($index)">{{x.firstName}}</span><input text="text"class="form-control input-sm" ng-model="x.firstName" ng-show="showMe($index)"></td>
+                            <td><span ng-hide="showMe($index)">{{x.lastName}}</span><input text="text" class="form-control input-sm" ng-model="x.lastName" ng-show="showMe($index)"></td>
+                            <td><span ng-hide="showMe($index)">{{x.phone}}</span><input text="text" class="form-control input-sm" ng-model="x.phone" ng-show="showMe($index)"></td>
+                            <td><a href="#" ng-click="removeItem()"><span class="glyphicon glyphicon-trash"></span>&nbsp;</a>/<a href="#" ng-click="change()" ng-hide="showMe($index)"> <span class="glyphicon glyphicon-edit"></span></a></a><a href="#" ng-click="save()" ng-show="showMe($index)">&nbsp;<span class="glyphicon glyphicon-ok"></span></a></td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+                </div>
+                <div class="panel-footer">
+                    <form class="form-inline" name="contactForm" ng-submit="contactForm.$valid && addItem(contactForm)">
+                        <div class="form-group">
+                            <span>First Name：</span>
+                            <input type="text" class="form-control" ng-model="newFirstName" required >
+                            <!-- <div ng-show="contactForm.$submitted || contactForm.newFirstName.$error.$invalid">
+                                <span ng-if="contactForm.newFirstName.$error.required">First name is required.</span>
+                            </div> -->
+                            <span class="error" ng-if="contactForm.newFirstName.$touched && contactForm.newFirstName.$invalid">The name is required.</span>
+                            
+                        </div>
+                        <div class="form-group">
+                            <span>Last Name：</span>
+                            <input type="text" class="form-control" ng-model="newLastName" required>
+                            <div ng-show="contactForm.$submitted || contactForm.newLastName.$error.$invalid">
+                                <span ng-if="contactForm.newLastName.$error.required" >Last name is required.</span>
+                            </div>
 
-            
-    </div>
+                        </div> 
+                        <div class="form-group">
+                            <span>Phone：</span>
+                            <input type="text" class="form-control" ng-model="newPhone" ng-keypress="filterValue($event)" maxlength="10" required>
+                            <!-- <div ng-show="contactForm.$submitted || contactForm.newPhone.$error.$invalid">
+                                <span ng-if="contactForm.newPhone.$error.required" >Phone is required.</span>
+                            </div>
+                            <span ng-if="contactForm.newPhone.$error.pattern">Please enter valid number!</span>
+                            <p ng-if = "((contactForm.newPhone.$error.minlength ||
+                                            contactForm.newPhone.$error.maxlength))
+                                            ">
+                                            Phone number should be 10 digits</p> -->
+                                            <span class="red-text" ng-if="contactForm.newPhone.$error.required">Contact number is a required field</span>
+                                            <span class="red-text" ng-show="contactForm.newPhone.$error.pattern">Please enter a 10 digit number</span>                
+                        </div>
+                        <input type="submit"  class="btn btn-primary btn-sm" value="Add">       
+                    </form>            
+                </div>
+            </div>        
+        </div>
+     </div>
+    </body>
 </html>
