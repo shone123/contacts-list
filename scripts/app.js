@@ -5,10 +5,11 @@ var app = angular.module('addrBook',['contactData']);
 
     $scope.info = null;
 
-    $scope.newFirstName="";
-    $scope.newLastName="";
-    $scope.newPhone="";
-
+    $scope.contactList = {
+        newFirstName:'',
+        newLastName:'',
+        newPhone:''
+    };    
     MyhttpService.httpGetService().then(function(response){
         $scope.info = response.data;
         }, function(error){
@@ -23,16 +24,21 @@ var app = angular.module('addrBook',['contactData']);
     
     $scope.addMe = function(){
         return {
-            firstName: $scope.newFirstName,
-            lastName:$scope.newLastName,
-            phone: $scope.newPhone
+            firstName: $scope.contactList.newFirstName,
+            lastName:$scope.contactList.newLastName,
+            phone: $scope.contactList.newPhone
         }
     }
     $scope.addItem = function(){
         if($scope.contactForm.$invalid) return false;
-            $scope.info.push($scope.addMe());
+        $scope.info.push($scope.addMe());
+        $scope.clearModel();
     }
-        
+    $scope.clearModel = function() {
+        $scope.contactList.newFirstName="";
+        $scope.contactList.newLastName="";
+        $scope.contactList.newPhone="";
+    }   
     $scope.removeItem = function(){
         $scope.info.splice(this.$index,1)
     }      

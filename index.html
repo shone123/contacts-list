@@ -22,8 +22,7 @@
             <div class="panel panel-info">
                 <div class="panel-heading">           
                     <div class="panel-title">
-                    <h3 class="text-center">Phone Book</h3>
-                                    
+                    <h3 class="text-center">Phone Book</h3>                                    
                     </div>      
                 </div>
                 <div class="panel-body">
@@ -60,24 +59,19 @@
                     <form class="form-inline" name="contactForm" ng-submit="contactForm.$valid && addItem(contactForm)">
                         <div class="form-group">
                             <span>First Name：</span>
-                            <input type="text" class="form-control" ng-model="newFirstName" required >
-                            <!-- <div ng-show="contactForm.$submitted || contactForm.newFirstName.$error.$invalid">
-                                <span ng-if="contactForm.newFirstName.$error.required">First name is required.</span>
-                            </div> -->
-                            <span class="error" ng-if="contactForm.newFirstName.$touched && contactForm.newFirstName.$invalid">The name is required.</span>
-                            
+                            <input type="text" class="form-control" ng-model="contactList.newFirstName" required >
+                            <span class="error" ng-if="contactForm.newFirstName.$touched && contactForm.newFirstName.$invalid">The name is required.</span>                            
                         </div>
                         <div class="form-group">
                             <span>Last Name：</span>
-                            <input type="text" class="form-control" ng-model="newLastName" required>
+                            <input type="text" class="form-control" ng-model="contactList.newLastName" required>
                             <div ng-show="contactForm.$submitted || contactForm.newLastName.$error.$invalid">
                                 <span ng-if="contactForm.newLastName.$error.required" >Last name is required.</span>
                             </div>
-
                         </div> 
                         <div class="form-group">
                             <span>Phone：</span>
-                            <input type="text" class="form-control" ng-model="newPhone" ng-keypress="filterValue($event)" maxlength="10" required>
+                            <input type="text" class="form-control" ng-model="contactList.newPhone" ng-keypress="filterValue($event)" maxlength="10" required>
                             <div ng-show="contactForm.$submitted || contactForm.newPhone.$error.$invalid">
                                 <span ng-if="contactForm.newPhone.$error.required" >Phone is required.</span>
                             </div>
