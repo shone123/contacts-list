@@ -14,28 +14,6 @@ var app = angular.module('addrBook',['contactData']);
         }, function(error){
         console.log(error);
     });
-    
-        
-    app.directive('numbersOnly', function () {
-        return {
-            require: 'ngModel',
-            link: function (scope, element, attr, ngModelCtrl) {
-                function fromUser(text) {
-                    if (text) {
-                        var transformedInput = text.replace(/[^0-9]/g, '');
-
-                        if (transformedInput !== text) {
-                            ngModelCtrl.$setViewValue(transformedInput);
-                            ngModelCtrl.$render();
-                        }
-                        return transformedInput;
-                    }
-                    return undefined;
-                }            
-                ngModelCtrl.$parsers.push(fromUser);
-            }
-        };
-    });
 
     $scope.filterValue = function($event){
         if(isNaN(String.fromCharCode($event.keyCode))){

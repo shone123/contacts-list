@@ -29,8 +29,8 @@
                 <div class="panel-body">
                 <form class="form-horizontal" name="contactSearchForm">
                     <div class="form-group has-info has-feedback">
-                        <label for="seacrh" class="col-sm-2 control-label">Search: </label>
-                        <div class="col-sm-5">
+                        <label for="seacrh" class="col-sm-3 control-label">Search: </label>
+                        <div class="col-md-5">
                             <input type="text"  name="search" ng-model ="searchList" class="form-control">
                             <span class="glyphicon glyphicon-search form-control-feedback"></span>                                            
                         </div>
@@ -78,16 +78,11 @@
                         <div class="form-group">
                             <span>Phone：</span>
                             <input type="text" class="form-control" ng-model="newPhone" ng-keypress="filterValue($event)" maxlength="10" required>
-                            <!-- <div ng-show="contactForm.$submitted || contactForm.newPhone.$error.$invalid">
+                            <div ng-show="contactForm.$submitted || contactForm.newPhone.$error.$invalid">
                                 <span ng-if="contactForm.newPhone.$error.required" >Phone is required.</span>
                             </div>
-                            <span ng-if="contactForm.newPhone.$error.pattern">Please enter valid number!</span>
-                            <p ng-if = "((contactForm.newPhone.$error.minlength ||
-                                            contactForm.newPhone.$error.maxlength))
-                                            ">
-                                            Phone number should be 10 digits</p> -->
-                                            <span class="red-text" ng-if="contactForm.newPhone.$error.required">Contact number is a required field</span>
-                                            <span class="red-text" ng-show="contactForm.newPhone.$error.pattern">Please enter a 10 digit number</span>                
+                            <span class="red-text" ng-if="contactForm.newPhone.$error.required">Contact number is a required field</span>
+                            <span class="red-text" ng-show="contactForm.newPhone.$error.pattern">Please enter a 10 digit number</span>                
                         </div>
                         <input type="submit"  class="btn btn-primary btn-sm" value="Add">       
                     </form>            
